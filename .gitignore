@@ -1,0 +1,114 @@
+# Repository .gitignore for the Applied Statistics course
+# Purpose: avoid tracking LaTeX compilation artifacts, editor/OS junk, Python caches,
+# and figure/image directories which are not final.
+
+# macOS
+.DS_Store
+Thumbs.db
+
+# Editor/IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# JetBrains (PyCharm, IntelliJ) - workspace & module files
+*.iml
+.idea/**
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# NetBeans
+nbproject/private/
+
+# Visual Studio Code
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Emacs/Vim
+*~
+.#*
+.emacs.desktop
+.local/
+.cache/
+
+# MCP
+.serena/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-wheel-metadata/
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.pytype/
+
+# Jupyter
+.ipynb_checkpoints
+
+# LaTeX compilation artifacts (common)
+*.aux
+*.bbl
+*.blg
+*.brf
+*.log
+*.out
+*.toc
+*.nav
+*.snm
+*.vrb
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.synctex
+*.run.xml
+*.xdv
+*.dvi
+*.ps
+*.lof
+*.lot
+*.lol
+*.bcf
+latex.out
+*.auxlock
+
+# latexmk and build dirs
+.latexmk/
+_minted-*/
+_build/
+build/
+out/
+dist/
+
+# Temporary and backup files
+*~
+*.bak
+*.backup
+.#*
+
+# Figures/images: ignore directories commonly used for generated/working figures
+# NOTE: This will ignore folders named `figures` or `images` anywhere in the tree.
+# If you need to track a specific file later, you can force-add it with `git add -f` or
+# add an exception (e.g. `!lessons/01-statistical-modeling/slides/figures/keep.png`).
+**/figures/
+**/figures/**
+**/images/
+**/images/**
+
+# If you want to also ignore generated PDFs, uncomment the following line
+# (*.pdf are sometimes final outputs, so left commented by default):
+# *.pdf

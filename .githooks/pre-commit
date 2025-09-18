@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Pre-commit hook to sanitize staged .tex files for leading-backslash/tab issues.
+# Install by running: git config core.hooksPath .githooks
+
+set -euo pipefail
+
+STAGED=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.tex$' || true)
+if [ -z "$STAGED" ]; then
+  exit 0
+fi
+
+PY=./scripts/sanitize_tex.py
+if [ ! -x "$PY" ]; then
+  # ensure script is executable
+  chmod +x "$PY" || true
+fi
+
+echo "Sanitizing staged .tex files..."
+for f in $STAGED; do
+  echo "  $f"
+  # run sanitizer on file (it will modify the file in-place)
+  python3 "$PY" "$f"
+  # re-stage if modified
+  git add "$f"
+done
+
+echo "Sanitization complete."
+
+exit 0
