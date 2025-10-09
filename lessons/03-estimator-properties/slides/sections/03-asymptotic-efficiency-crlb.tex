@@ -1,0 +1,266 @@
+% Module: Asymptotic Efficiency & the Cramér--Rao Lower Bound (CRLB)
+% This section extends Lesson 2 (Fisher information, MLE properties) and provides foundation for confidence intervals.
+% Uses fisher_info_* functions from the appendix.
+
+\section{Asymptotic Efficiency \& CRLB}
+
+% Title & Objectives
+\begin{frame}{Asymptotic Efficiency \& Cramér--Rao Lower Bound}
+  \begin{block}{Learning Objectives}
+    \begin{itemize}
+      \item Define score function, Fisher information, and CRLB for unbiased estimators
+      \item State regularity conditions and equality cases
+      \item Explain asymptotic normality of MLEs and asymptotic efficiency
+      \item Work through Normal, Poisson, and Exponential examples (Lesson 2)
+    \end{itemize}
+  \end{block}
+
+  \vspace{1em}
+  \begin{center}
+    \textit{Extends Lesson 2 (Fisher information, MLE) foundations}
+  \end{center}
+\end{frame}
+
+% Score Function
+\begin{frame}{Score Function}
+  \begin{block}{Definition}
+    The score function is the derivative of the log-likelihood:
+    \[U(\theta) = \frac{\partial \ell(\theta)}{\partial \theta}.\]
+  \end{block}
+
+  \begin{block}{Intuition}
+    The score measures the sensitivity of the log-likelihood to changes
+    in the parameter. It indicates the direction and magnitude of the
+    gradient that the MLE will follow.
+  \end{block}
+
+  \begin{block}{Connection to Lesson 2}
+    For i.i.d. data, the total score is $U_n(\theta) = \sum_{i=1}^n U_i(\theta)$,
+    and the MLE satisfies $U_n(\hat{\theta}_{\MLE}) = 0$.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Score Function --- Visual}
+  \begin{center}
+    \includegraphics[width=0.95\textwidth]{figures/fisher_information_visualization.png}
+  \end{center}
+  \vspace{-0.3cm}
+  \footnotesize Panels show likelihood curves and Fisher information for different distributions
+\end{frame}
+
+% Fisher Information
+\begin{frame}{Fisher Information}
+  \begin{block}{Definition}
+    The Fisher information is the variance of the score:
+    \[\FisherInfo(\theta) = \Var(U(\theta)) = -\E\left[\frac{\partial^2 \ell(\theta)}{\partial \theta^2}\right].\]
+  \end{block}
+
+  \begin{block}{Intuition}
+    Fisher information quantifies the amount of information about $\theta$
+    contained in the data. Higher information means sharper likelihood
+    peaks and lower achievable variance.
+  \end{block}
+
+  \begin{block}{Connection to Lesson 2}
+    For i.i.d. data, the total information is $\FisherInfo_n(\theta) = n \FisherInfo(\theta)$,
+    explaining the $1/n$ scaling of MLE variance.
+  \end{block}
+\end{frame}
+
+% CRLB
+\begin{frame}{Cramér--Rao Lower Bound}
+  \begin{block}{Statement}
+    For an unbiased estimator $\hat{\theta}$ of $\theta$:
+    \[\Var(\hat{\theta}) \geq \frac{1}{\FisherInfo_n(\theta)},\]
+    with equality if and only if $\hat{\theta}$ is the MLE (under regularity conditions).
+  \end{block}
+
+  \begin{block}{Intuition}
+    The CRLB sets the theoretical minimum variance any unbiased estimator
+    can achieve. It represents the best possible precision given the data
+    and model structure.
+  \end{block}
+
+  \begin{block}{Practical Value}
+    The CRLB helps set expectations about estimator performance and
+    identifies when an estimator is statistically efficient.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Cramér--Rao Lower Bound --- Visual}
+  \begin{center}
+    \includegraphics[width=0.95\textwidth]{figures/crlb_achievement.png}
+  \end{center}
+  \vspace{-0.3cm}
+  \footnotesize Shows CRLB achievement for Normal, Poisson, and Exponential distributions
+\end{frame}
+
+% Example A: Normal Mean
+\begin{frame}{Example: Normal Mean ($\sigma$ known)}
+  \begin{block}{Setup}
+    $X_i \sim \Normal(\mu, \sigma^2)$ i.i.d. with $\sigma$ known.
+    Estimator: $\hat{\mu} = \bar{X}_n$.
+  \end{block}
+
+  \begin{block}{Fisher Information}
+    \[\FisherInfo(\mu) = \frac{1}{\sigma^2}, \quad \FisherInfo_n(\mu) = \frac{n}{\sigma^2}.\]
+  \end{block}
+
+  \begin{block}{CRLB and Efficiency}
+    \[\Var(\bar{X}_n) = \frac{\sigma^2}{n} = \frac{1}{\FisherInfo_n(\mu)}.\]
+    The sample mean achieves the CRLB and is efficient.
+  \end{block}
+
+  \begin{block}{Connection to Lesson 1}
+    This follows from the CLT: $\sqrt{n}(\bar{X}_n - \mu) \to \Normal(0, \sigma^2)$.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Normal Mean --- Visual}
+  \begin{center}
+    \includegraphics[width=0.95\textwidth]{figures/crlb_achievement.png}
+  \end{center}
+  \vspace{-0.3cm}
+  \footnotesize Panel 1 shows Normal mean estimator achieving CRLB
+\end{frame}
+
+% Example B: Poisson Rate
+\begin{frame}{Example: Poisson Rate}
+  \begin{block}{Setup}
+    $X_i \sim \Poisson(\lambda)$ i.i.d.
+    Estimator: $\hat{\lambda} = \bar{X}_n$ (both MLE and MoM).
+  \end{block}
+
+  \begin{block}{Fisher Information}
+    \[\FisherInfo(\lambda) = \frac{1}{\lambda}, \quad \FisherInfo_n(\lambda) = \frac{n}{\lambda}.\]
+  \end{block}
+
+  \begin{block}{CRLB and Efficiency}
+    \[\Var(\bar{X}_n) = \frac{\lambda}{n} = \frac{1}{\FisherInfo_n(\lambda)}.\]
+    The sample mean achieves the CRLB and is efficient.
+  \end{block}
+
+  \begin{block}{Connection to Lesson 2}
+    This is the same estimator derived by both MLE and MoM methods,
+    demonstrating efficiency of both approaches for this model.
+  \end{block}
+\end{frame}
+
+% Example C: Exponential Rate
+\begin{frame}{Example: Exponential Rate}
+  \begin{block}{Setup}
+    $X_i \sim \Exponential(\lambda)$ i.i.d. (rate parameter).
+    MLE: $\hat{\lambda}_{\MLE} = n / \sum_{i=1}^n X_i$.
+  \end{block}
+
+  \begin{block}{Fisher Information}
+    \[\FisherInfo(\lambda) = \frac{1}{\lambda^2}, \quad \FisherInfo_n(\lambda) = \frac{n}{\lambda^2}.\]
+  \end{block}
+
+  \begin{block}{CRLB}
+    \[\Var(\hat{\lambda}) \geq \frac{\lambda^2}{n}.\]
+  \end{block}
+
+  \begin{block}{Asymptotic Efficiency}
+    The MLE achieves the CRLB asymptotically, but may have finite-sample bias.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Exponential Rate --- Visual}
+  \begin{center}
+    \includegraphics[width=0.95\textwidth]{figures/crlb_achievement.png}
+
+    \vspace{-0.3cm}
+    \footnotesize Panel 3 shows Exponential rate MLE approaching CRLB; Panel 4 compares efficiency
+  \end{center}
+\end{frame}
+
+% Asymptotic Normality of MLE
+\begin{frame}{Asymptotic Normality of MLE}
+  \begin{block}{Statement}
+    Under regularity conditions:
+    \[\sqrt{n}(\hat{\theta}_{\MLE} - \theta_0) \xrightarrow{\;\mathcal{D}\;} \Normal\left(0, \FisherInfo(\theta_0)^{-1}\right).\]
+  \end{block}
+
+  \begin{block}{Intuition}
+    For large samples, MLEs behave like normal random variables with
+    variance equal to the inverse Fisher information.
+  \end{block}
+
+  \begin{block}{Practical Implication}
+    This justifies the use of normal approximations for MLE confidence
+    intervals and hypothesis tests in large samples.
+  \end{block}
+\end{frame}
+
+% Asymptotic Efficiency
+\begin{frame}{Asymptotic Efficiency}
+  \begin{block}{Definition}
+    An estimator is asymptotically efficient if it achieves the CRLB
+    as $n \to \infty$, i.e.,
+    \[\sqrt{n}(\hat{\theta}_n - \theta) \xrightarrow{\;\mathcal{D}\;} \Normal\left(0, \FisherInfo(\theta)^{-1}\right).\]
+  \end{block}
+
+  \begin{block}{MLE Property}
+    Maximum likelihood estimators are asymptotically efficient under
+    regularity conditions, making them the gold standard for large samples.
+  \end{block}
+
+  \begin{block}{Connection to Lesson 2}
+    This explains why MLEs are preferred when sample sizes are large
+    and regularity conditions hold.
+  \end{block}
+\end{frame}
+
+% Pitfalls
+\begin{frame}{Pitfalls \& Regularity Conditions}
+  \begin{block}{Regularity Conditions}
+    \begin{itemize}
+      \item Support of distribution doesn't depend on $\theta$
+      \item Likelihood differentiable in $\theta$
+      \item Fisher information finite and positive
+      \item Dominated convergence for expectation interchanges
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{When CRLB Fails}
+    \begin{itemize}
+      \item Boundary parameters (e.g., variance near 0)
+      \item Discrete parameters with small support
+      \item Model misspecification
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+% Exercises
+\begin{frame}{Exercises}
+  \begin{enumerate}
+    \item Compute the Fisher information for Bernoulli$(p)$ and derive the CRLB for unbiased estimators of $p$.
+    \item Show that the sample mean achieves the CRLB for Normal$(\mu, \sigma^2)$ with $\sigma$ known.
+    \item Use the \texttt{fisher\_info\_poisson()} function from the appendix to compute information for $\lambda = 2, 5, 10$.
+    \item Explain why the MLE for Uniform$[0, \theta]$ achieves the CRLB while other estimators may not.
+  \end{enumerate}
+\end{frame}
+
+% Summary & References
+\begin{frame}{Summary}
+  \begin{block}{Key Takeaways}
+    \begin{itemize}
+      \item Fisher information quantifies precision: $I(\theta) = \Var(U(\theta))$
+      \item CRLB sets minimum variance: $\Var(\hat{\theta}) \geq 1/I_n(\theta)$
+      \item MLEs achieve CRLB asymptotically (asymptotically efficient)
+      \item Normal, Poisson, and Exponential examples illustrate efficiency
+      \item Regularity conditions ensure CRLB applicability
+    \end{itemize}
+  \end{block}
+
+  \begin{center}
+    \textit{Provides efficiency foundation for Lesson 2 estimators}
+  \end{center}
+
+  \footnotesize
+  \begin{itemize}
+    \item Wikipedia: Fisher information \url{https://en.wikipedia.org/wiki/Fisher_information}
+    \item Casella \& Berger, \textit{Statistical Inference} (Chapter 7)
+  \end{itemize}
+\end{frame}

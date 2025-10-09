@@ -1,0 +1,46 @@
+% Part II — Properties of MLE Estimators
+\section{Properties of MLE}
+
+% Slide 8 — MLE Properties
+\begin{frame}{Properties of MLE}
+  \begin{block}{Summary (formal)}
+    The maximum likelihood estimator satisfies, under regularity conditions:
+    \begin{itemize}
+      \item Consistency
+      \item Asymptotic normality
+      \item Asymptotic efficiency (attains CRLB)
+      \item Invariance: $g(\hat{\theta}_{\text{MLE}})$ is the MLE of $g(\theta)$
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Intuition / Relevance}
+    MLEs are often the default in applied work because they combine good
+    theoretical properties with practical performance for moderate-to-large
+    sample sizes; the invariance property makes transforming estimates easy.
+  \end{block}
+
+  \vspace{0.7em}
+  % Visual moved to a dedicated frame
+\end{frame}
+
+% Visual frame — MLE Properties (visual)
+\begin{frame}{Properties of MLE -- Visual}
+  \begin{center}
+    \begin{adjustbox}{max height=0.40\textheight}
+    \begin{tikzpicture}[scale=0.9]
+      % Crown for MLE
+      \node[draw, circle, fill=gold!30, minimum size=2cm] at (0,0) {\textbf{MLE}};
+      \draw[thick, gold] (-0.5, 0.7) -- (-0.3, 1.2) -- (0, 0.9) -- (0.3, 1.2) -- (0.5, 0.7);
+      \draw[thick, gold] (-0.2, 1.0) -- (0, 1.4) -- (0.2, 1.0);
+
+      % Properties around it
+      \node[fill=green!20, rounded corners] at (-2.5, 1) {Consistent};
+      \node[fill=blue!20, rounded corners] at (2.5, 1) {Asymp. Normal};
+      \node[fill=red!20, rounded corners] at (-2.5, -1) {Efficient};
+      \node[fill=purple!20, rounded corners] at (2.5, -1) {Invariant};
+
+      \node at (0, -2) {\textbf{Gold Standard for Large Samples}};
+    \end{tikzpicture}
+    \end{adjustbox}
+  \end{center}
+\end{frame}

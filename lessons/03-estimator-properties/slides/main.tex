@@ -1,0 +1,124 @@
+% !TeX program = tectonic
+\documentclass{beamer}
+
+% Theme
+\usetheme{Madrid}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+
+% Packages
+% Use fontspec under XeLaTeX/LuaLaTeX for robust Unicode support
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+% Fontspec removed for Tectonic compatibility
+\usepackage{amsmath, amssymb, bm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{arydshln}
+\usepackage{hyperref}
+
+% Sanitize PDF bookmarks: replace math/special macros with plain-text fallbacks
+\pdfstringdefDisableCommands{%
+  \def\textemdash{-}%
+  \def\P{P}%
+  \def\E{E}%
+  \def\Var{Var}%
+  \def\ell{ell}%
+  \def\mathbb#1{#1}%
+  \def\mathcal#1{#1}%
+  \def\bm#1{#1}%
+}
+
+\usepackage{centernot}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing}
+\usepackage{adjustbox}
+
+
+% Define colors
+\definecolor{gold}{RGB}{255,215,0}
+
+% Ensure figures auto-fit within slides by default (consistent with Lesson 1)
+\setkeys{Gin}{width=\linewidth,height=0.62\textheight,keepaspectratio}
+
+% Notation and helpers (aligned with Lessons 00/01)
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\MSE}{\operatorname{MSE}}
+\newcommand{\Bias}{\operatorname{Bias}}
+\newcommand{\1}{\mathbf{1}}
+\newcommand{\indep}{\perp\!\!\!\perp}
+\newcommand{\toP}{\xrightarrow{\,\mathsf{P}\,}}
+\newcommand{\toas}{\xrightarrow{\,\mathsf{a.s.}\,}}
+\newcommand{\tod}{\xrightarrow{\,\mathcal{D}\,}}
+\newcommand{\I}{I}
+% Additional macros for Lesson 3
+\newcommand{\MLE}{\text{MLE}}
+\newcommand{\MoM}{\text{MoM}}
+\newcommand{\CI}{\text{CI}}
+\newcommand{\FisherInfo}{\mathcal{I}}
+\newcommand{\plim}{\operatorname{plim}}
+\newcommand{\LLN}{\text{LLN}}
+\newcommand{\ChiSq}{\chi^2}
+\newcommand{\Normal}{\mathcal{N}}
+\newcommand{\Uniform}{\mathcal{U}}
+\newcommand{\Poisson}{\text{Poisson}}
+\newcommand{\Exponential}{\text{Exp}}
+\newcommand{\Bernoulli}{\text{Bernoulli}}
+\newcommand{\median}{\operatorname{median}}
+
+% Helper for robust top-line commands (following safe-latex-edits.md guidelines)
+% Define a wrapper that accepts an optional argument so calls like
+% `\robustcmd{tableofcontents}[currentsection,...]` work reliably.
+\makeatletter
+\def\robustcmd#1{%
+  \@ifnextchar[{\robustcmd@opt{#1}}{\robustcmd@noopt{#1}}%
+}
+\def\robustcmd@opt#1[#2]{\csname #1\endcsname[#2]}%
+\def\robustcmd@noopt#1{\csname #1\endcsname}%
+\makeatother
+
+% Show a mini table of contents at the beginning of each section
+\AtBeginSection{%
+  % Use \frame{...} here (not the environment) to avoid grouping issues that
+  % can sometimes cause empty frames when the optional args or macros are
+  % expanded. This explicitly sets the title and then prints the mini-TOC.
+  \frame{%
+    \frametitle{Outline}
+    \centering
+    {\Large \insertsection}\par\vspace{0.6em}
+    \vfill
+    \begin{minipage}{0.92\textwidth}
+      % Use the robust alias so macro-based wrappers still work with optional args
+      \robustcmd{tableofcontents}[currentsection,hideothersubsections]
+    \end{minipage}
+  }
+}
+
+% Title information (robust wrappers as per safe-latex-edits)
+\robustcmd{title}{Lesson 3 --- Estimator Properties}
+\robustcmd{subtitle}{Consistency, Bias, Variance, Confidence Intervals}
+\robustcmd{author}{Applied Statistics Course}
+\robustcmd{date}{}
+
+\begin{document}
+
+\begin{frame}
+  \robustcmd{titlepage}
+\end{frame}
+
+% --- Section inputs (modularized) ---
+% Updated to use new module-based structure matching prompt pack
+\input{sections/01-bias-variance-tradeoff}
+\input{sections/02-consistency}
+\input{sections/03-asymptotic-efficiency-crlb}
+\input{sections/04-confidence-intervals}
+\input{sections/05-bootstrap}
+
+\end{document}
