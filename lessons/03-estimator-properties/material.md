@@ -312,8 +312,8 @@ Simulation studies show:
 
 **Bootstrap procedure**:
 1. Draw $B$ bootstrap samples (with replacement) from original data
-2. Compute statistic $\hat{\theta}^*_b$ for each bootstrap sample
-3. Use distribution of $\{\hat{\theta}^*_1, \ldots, \hat{\theta}^*_B\}$ to:
+2. Compute statistic $\hat{\theta}^{*}_{b}$ for each bootstrap sample
+3. Use distribution of $\{\hat{\theta}^{*}_{1}, \ldots, \hat{\theta}^{*}_{B}\}$ to:
    - Estimate standard error
    - Construct confidence intervals
    - Assess sampling variability
@@ -322,9 +322,9 @@ Simulation studies show:
 
 Estimate the standard error of $\hat{\theta}$ using bootstrap:
 
-$$\widehat{\text{SE}}(\hat{\theta}) = \sqrt{\frac{1}{B-1}\sum_{b=1}^B (\hat{\theta}^*_b - \bar{\theta}^*)^2}$$
+$$\widehat{\text{SE}}(\hat{\theta}) = \sqrt{\frac{1}{B-1}\sum_{b=1}^{B} (\hat{\theta}^{*}_{b} - \bar{\theta}^{*})^2}$$
 
-where $\bar{\theta}^* = \frac{1}{B}\sum_{b=1}^B \hat{\theta}^*_b$
+where $\bar{\theta}^{*} = \frac{1}{B}\sum_{b=1}^{B} \hat{\theta}^{*}_{b}$
 
 ### 5.3 Bootstrap Confidence Intervals
 
@@ -334,7 +334,7 @@ Simply use quantiles of bootstrap distribution:
 
 $$\text{CI}_{1-\alpha} = [q_{\alpha/2}, q_{1-\alpha/2}]$$
 
-where $q_p$ is the $p$-th quantile of $\{\hat{\theta}^*_1, \ldots, \hat{\theta}^*_B\}$
+where $q_p$ is the $p$-th quantile of $\{\hat{\theta}^{*}_{1}, \ldots, \hat{\theta}^{*}_{B}\}$
 
 **Method 2: Basic Bootstrap CI (Reflection Method)**
 
@@ -346,8 +346,8 @@ $$\text{CI}_{1-\alpha} = [2\hat{\theta} - q_{1-\alpha/2}, 2\hat{\theta} - q_{\al
 
 **Method 3: Bootstrap-t CI**
 
-1. Compute $t^*_b = \frac{\hat{\theta}^*_b - \hat{\theta}}{\widehat{\text{SE}}(\hat{\theta}^*_b)}$ for each bootstrap
-2. Find quantiles $t_{\alpha/2}$ and $t_{1-\alpha/2}$ of $\{t^*_1, \ldots, t^*_B\}$
+1. Compute $t^{*}_{b} = \frac{\hat{\theta}^{*}_{b} - \hat{\theta}}{\widehat{\text{SE}}(\hat{\theta}^{*}_{b})}$ for each bootstrap
+2. Find quantiles $t_{\alpha/2}$ and $t_{1-\alpha/2}$ of $\{t^{*}_{1}, \ldots, t^{*}_{B}\}$
 3. CI: $[\hat{\theta} - t_{1-\alpha/2} \cdot \widehat{\text{SE}}(\hat{\theta}), \hat{\theta} - t_{\alpha/2} \cdot \widehat{\text{SE}}(\hat{\theta})]$
 
 **Method 4: BCa (Bias-Corrected and Accelerated)**
@@ -355,7 +355,7 @@ $$\text{CI}_{1-\alpha} = [2\hat{\theta} - q_{1-\alpha/2}, 2\hat{\theta} - q_{\al
 The most sophisticated bootstrap CI method, adjusting for both bias and skewness:
 
 **Bias correction (z₀)**: Measures how much the bootstrap distribution is shifted from the observed statistic
-- $z_0 = \Phi^{-1}\left(\frac{\#\{\hat{\theta}^*_b < \hat{\theta}\}}{B}\right)$
+- $z_0 = \Phi^{-1}\left(\frac{\#\{\hat{\theta}^{*}_{b} < \hat{\theta}\}}{B}\right)$
 - When $z_0 \neq 0$, the bootstrap distribution is asymmetric around $\hat{\theta}$
 
 **Acceleration (a)**: Captures the rate at which the standard error changes
