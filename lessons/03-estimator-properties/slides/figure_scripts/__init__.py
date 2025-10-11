@@ -1,1 +1,0 @@
-# Figure scripts for lesson 03
