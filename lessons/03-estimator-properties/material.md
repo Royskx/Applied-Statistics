@@ -355,7 +355,7 @@ $$\text{CI}_{1-\alpha} = [2\hat{\theta} - q_{1-\alpha/2}, 2\hat{\theta} - q_{\al
 The most sophisticated bootstrap CI method, adjusting for both bias and skewness:
 
 **Bias correction (z₀)**: Measures how much the bootstrap distribution is shifted from the observed statistic
-- $z_0 = \Phi^{-1}\left(\frac{\#\{\hat{\theta}^{\ast}_{b} < \hat{\theta}\}}{B}\right)$
+- $z_0 = \Phi^{-1}\left(\frac{|\{\hat{\theta}^{\ast}_{b} < \hat{\theta}\}|}{B}\right)$
 - When $z_0 \neq 0$, the bootstrap distribution is asymmetric around $\hat{\theta}$
 
 **Acceleration (a)**: Captures the rate at which the standard error changes
