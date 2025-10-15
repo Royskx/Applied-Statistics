@@ -1,0 +1,28 @@
+# Build artifacts
+build/
+*.aux
+*.log
+*.out
+*.fdb_latexmk
+*.fls
+*.nav
+*.snm
+*.toc
+*.synctex.gz
+*.vrb
+*.bbl
+*.blg
+*.bcf
+*.run.xml
+
+# Generated figures
+figures/
+*.png
+
+# macOS
+.DS_Store
+
+# Backup files
+*~
+*.bak
+*.swp

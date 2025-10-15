@@ -1,0 +1,115 @@
+% Section: Maximum Likelihood Estimation - Examples and Properties
+% This section covers MLE applications to various distributions
+% and discusses theoretical properties, strengths, and limitations.
+
+\begin{frame}{MLE for the Normal Mean ($\sigma^2$ known)}
+  \footnotesize
+  \begin{center}
+    \includegraphics[width=0.7\textwidth]{figures/normal_mean_mle.png}
+  \end{center}
+  \vspace{-0.5em}
+  \begin{block}{Model \& Solution}
+    \small
+    Model: \(X_i \sim \mathcal{N}(\mu, \sigma^2)\) with \(\sigma^2\) known\\
+    Log-likelihood: \(\ell(\mu) = -\tfrac{n}{2}\log(2\pi\sigma^2) - \tfrac{1}{2\sigma^2}\sum_{i=1}^n (x_i - \mu)^2\)\\
+    MLE: \(\hat{\mu}_{MLE} = \overline{X}_n\)
+  \end{block}
+\end{frame}
+
+\begin{frame}{MLE for Normal ($\mu$, $\sigma^2$ unknown)}
+  \footnotesize
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{figures/normal_full_mle.png}
+  \end{center}
+  \vspace{-0.7em}
+  \begin{block}{Joint Estimation}
+    \footnotesize
+    Model: \(X_i \sim \mathcal{N}(\mu, \sigma^2)\)\\
+    MLEs: \(\hat{\mu}_{MLE} = \overline{X}_n\), \(\hat{\sigma}^2_{MLE} = \tfrac{1}{n}\sum (x_i - \overline{X}_n)^2\)\\
+    Note: MLE uses \(n\), not \(n-1\)
+  \end{block}
+\end{frame}
+
+\begin{frame}{MLE for Poisson Parameter $\lambda$}
+  \footnotesize
+  \begin{center}
+    \includegraphics[width=0.9\textwidth]{figures/poisson_mle.png}
+  \end{center}
+  \vspace{-0.5em}
+  \begin{block}{Discrete Distribution MLE}
+    \small
+    Model: \(X_i \sim \text{Poisson}(\lambda)\)\\
+    Log-likelihood: \(\ell(\lambda) = \sum (x_i \log \lambda - \lambda - \log(x_i!))\)\\
+    MLE: \(\hat{\lambda}_{MLE} = \overline{X}_n\)
+  \end{block}
+\end{frame}
+
+\begin{frame}{Theoretical Properties of MLE}
+  \footnotesize
+  \begin{center}
+    \includegraphics[width=0.75\textwidth]{figures/mle_asymptotic_properties.png}
+  \end{center}
+  \vspace{-0.8em}
+  \begin{itemize}
+    \footnotesize
+    \item \textbf{Consistency:} \(\hat{\theta}_{MLE} \to \theta\)
+    \item \textbf{Asymptotic Normality:} \(\sqrt{n}(\hat{\theta}_{MLE} - \theta) \xrightarrow{d} \mathcal{N}(0, I(\theta)^{-1})\)
+    \item \textbf{Efficiency:} achieves the Cramér–Rao lower bound asymptotically
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Fisher Information}
+  \footnotesize
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{figures/fisher_information_concept.png}
+  \end{center}
+  \vspace{-0.7em}
+  \begin{block}{Definition \& Intuition}
+    \footnotesize
+    Fisher Information: \(I(\theta) = -\mathbb{E}\left[ \frac{\partial^2}{\partial \theta^2}\ell(\theta) \right]\)\\
+    High information → sharper peak → lower variance
+  \end{block}
+\end{frame}
+
+\begin{frame}{Strengths of MLE}
+  \footnotesize
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{figures/mle_strengths.png}
+  \end{center}
+  \vspace{-0.7em}
+  \begin{itemize}
+    \footnotesize
+    \item Works well for large \(n\) (asymptotic guarantees)
+    \item Very flexible, applicable to many models
+    \item \textbf{Invariance property:} if \(\hat{\theta}\) is MLE of \(\theta\), then \(g(\hat{\theta})\) is MLE of \(g(\theta)\)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Limitations of MLE}
+  \footnotesize
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{figures/mle_limitations.png}
+  \end{center}
+  \vspace{-0.7em}
+  \begin{itemize}
+    \footnotesize
+    \item Small \(n\) → bias and instability
+    \item Non-identifiability → multiple maxima
+    \item Likelihood surface can be flat or multimodal
+    \item Sensitive to model misspecification
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{MLE: Strengths and Limitations}
+  \footnotesize
+  \begin{center}
+    \includegraphics[width=0.85\textwidth]{figures/mle_summary_comparison.png}
+  \end{center}
+  \vspace{-0.8em}
+  \begin{itemize}
+    \footnotesize
+    \item MLE is powerful and widely used
+    \item Asymptotically consistent, normal, and efficient
+    \item Must be cautious with small samples or misspecified models
+  \end{itemize}
+\end{frame}

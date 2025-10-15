@@ -1,4 +1,4 @@
-% !TeX program = tectonic
+% !TeX program = xelatex
 \documentclass{beamer}
 
 % Theme
@@ -89,581 +89,150 @@
   {\footnotesize Recall Lesson 1: random variables, laws (PMF/PDF/CDF), LLN/CLT, and notation (\(\P,\E,\Var\)).}
 \end{frame}
 
-\section{Likelihood and MLE}
+% ============================================================================
+% Section 1: Maximum Likelihood Estimation - Likelihood Concepts
+% ============================================================================
+\section{Maximum Likelihood Estimation (MLE)}
+\input{sections/01-mle-likelihood}
 
-\begin{frame}{Parameter Estimation: Why Do We Care?}
-  \footnotesize
-  \begin{center}
-    \includegraphics[width=0.75\textwidth]{figures/mle_motivation.png}
-  \end{center}
-  \vspace{-0.7em}
-  \begin{block}{The Central Question}
-    \small Given observed data, what parameter values make this data most plausible under our model?
-  \end{block}
-  \vspace{-0.1em}
-  \begin{itemize}
-    \item We have data \(x_1, x_2, \ldots, x_n\)
-    \item We assume a probabilistic model \(f(x \mid \theta)\)
-    \item We want to find the ``best'' estimate \(\hat{\theta}\)
-  \end{itemize}
-\end{frame}
+% ============================================================================
+% Section 2: Maximum Likelihood Estimation - Examples and Properties
+% ============================================================================
+\input{sections/02-mle-properties}
 
-\begin{frame}{Probability vs. Likelihood: The Key Duality}
-  \begin{center}
-    \includegraphics[width=0.75\textwidth]{figures/probability_likelihood_duality.png}
-  \end{center}
-  \vspace{-0.7em}
-  \begin{columns}[T]
-  \column{0.48\linewidth}
-  \begin{block}{Probability}
-    \small Fixed \(\theta\), varying data \(x\)\\
-    \(P(X = x \mid \theta)\)
-  \end{block}
-  \column{0.48\linewidth}
-  \begin{block}{Likelihood}
-    \small Fixed data \(x\), varying \(\theta\)\\
-    \(L(\theta \mid x) \propto P(X = x \mid \theta)\)
-  \end{block}
-  \end{columns}
-  \vspace{-0.1em}
-  \begin{exampleblock}{Key Insight}
-    \small Same mathematical function, but we're asking different questions!
-  \end{exampleblock}
-\end{frame}
-
-\begin{frame}{What is the Likelihood Function?}
-  \begin{center}
-    \includegraphics[width=0.65\textwidth]{figures/likelihood_function_concept.png}
-  \end{center}
-  \vspace{-0.7em}
-  \begin{block}{Definition}
-    \footnotesize For observed data \(x_1, \ldots, x_n\) and model \(f(x \mid \theta)\):
-    \[L(\theta) = \prod_{i=1}^n f(x_i \mid \theta)\]
-  \end{block}
-  \vspace{-0.2em}
-  \begin{itemize}
-    \footnotesize
-    \item Measures how well parameter \(\theta\) explains the observed data
-    \item Higher likelihood \(\Rightarrow\) parameter is more supported by data
-    \item Often work with log-likelihood: \(\ell(\theta) = \sum_{i=1}^n \log f(x_i \mid \theta)\)
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{The Maximum Likelihood Principle}
-  \begin{center}
-    \includegraphics[width=0.55\textwidth]{figures/mle_principle.png}
-  \end{center}
-  \vspace{-0.9em}
-  \begin{block}{MLE Definition}
-    \footnotesize The Maximum Likelihood Estimator (MLE) is:
-    \[\hat{\theta}_{\text{MLE}} = \arg\max_{\theta} L(\theta) = \arg\max_{\theta} \ell(\theta)\]
-  \end{block}
-  \vspace{-0.3em}
-  \begin{exampleblock}{Intuition}
-    \footnotesize Choose the parameter value that makes our observed data as likely as possible.
-  \end{exampleblock}
-\end{frame}
-
-\begin{frame}{From Likelihood to Log-Likelihood}
-  \footnotesize
-  \begin{center}
-    \includegraphics[width=0.85\textwidth]{figures/likelihood_to_log_likelihood.png}
-  \end{center}
-  \vspace{-0.7em}
-  \begin{itemize}
-    \item Likelihood is a product of terms: \(L(\theta) = \prod_{i=1}^n f_\theta(x_i)\)
-    \item Products are difficult to optimize when \(n\) is large
-    \item Take the log to simplify: \(\ell(\theta) = \log L(\theta) = \sum_{i=1}^n \log f_\theta(x_i)\)
-    \item Since log is strictly increasing, maximizing \(L\) or \(\ell\) is equivalent
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Why use log-likelihood in practice?}
-  \footnotesize
-  \begin{center}
-    \includegraphics[width=0.72\textwidth]{figures/log_likelihood_benefits.png}
-  \end{center}
-  \vspace{-0.7em}
-  \begin{itemize}
-    \item \textbf{Numerical stability:} avoids underflow when multiplying many small numbers
-    \item \textbf{Simplifies optimization:} turns products into sums, easier differentiation
-    \item \textbf{Reveals structure:} concavity/convexity properties often clearer
-    \item \textbf{Same maximum:} \(\arg\max L(\theta) = \arg\max \ell(\theta)\)
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Log-Likelihood for the Bernoulli Model}
-  \footnotesize
-  \begin{center}
-    \includegraphics[width=0.72\textwidth]{figures/bernoulli_likelihood_comparison.png}
-  \end{center}
-  \vspace{-0.7em}
-  \begin{block}{Bernoulli Case}
-    \small
-    Likelihood: \(L(p) = p^{\sum x_i}(1-p)^{n-\sum x_i}\)\\
-    Log-likelihood: \(\ell(p) = (\sum x_i) \log p + (n - \sum x_i) \log(1-p)\)\\
-    Easier to differentiate, leads to closed-form solution: \(\hat{p} = \tfrac{1}{n}\sum x_i\)
-  \end{block}
-\end{frame}
-
-\begin{frame}{Example: Coin Flips (Bernoulli Model)}
-  \textbf{Setup:} \(n\) coin flips, \(k\) heads observed. Model: \(X_i \sim \text{Bernoulli}(p)\)
-
-  \vspace{0.3em}
-  \textbf{Likelihood:} \(L(p) = p^k (1-p)^{n-k}\)
-
-  \vspace{0.3em}
-  \textbf{Log-likelihood:} \(\ell(p) = k \log p + (n-k) \log(1-p)\)
-
-  \vspace{0.3em}
-  \textbf{Find MLE:} \(\frac{d\ell}{dp} = \frac{k}{p} - \frac{n-k}{1-p} = 0\)
-
-  \vspace{0.3em}
-  \begin{block}{Result}
-    \[\hat{p}_{\text{MLE}} = \frac{k}{n} = \bar{x}\]
-  \end{block}
-
-  \vspace{0.2em}
-  \begin{exampleblock}{Makes Sense!}
-    \small The proportion of heads in our sample is the most likely value for the coin's bias.
-  \end{exampleblock}
-\end{frame}
-
-\begin{frame}{MLE: Key Takeaways}
-  \footnotesize
-  \begin{center}
-    \includegraphics[width=0.75\textwidth]{figures/mle_workflow.png}
-  \end{center}
-  \vspace{-1.2em}
-  \begin{itemize}
-    \item \textbf{Intuitive:} Choose parameters that best explain observed data
-    \item \textbf{General:} Works for any probabilistic model
-    \item \textbf{Principled:} Solid theoretical foundation
-    \item \textbf{Practical:} Often gives closed-form solutions
-  \end{itemize}
-
-  \vspace{-0.5em}
-  \begin{alertblock}{Coming Up}
-    \small More examples, properties, and when MLE works well (or doesn't!)
-  \end{alertblock}
-\end{frame}
-
-\begin{frame}{MLE for the Normal Mean ($\sigma^2$ known)}
-  \footnotesize
-  \begin{center}
-    \includegraphics[width=0.7\textwidth]{figures/normal_mean_mle.png}
-  \end{center}
-  \vspace{-0.5em}
-  \begin{block}{Model \& Solution}
-    \small
-    Model: \(X_i \sim \mathcal{N}(\mu, \sigma^2)\) with \(\sigma^2\) known\\
-    Log-likelihood: \(\ell(\mu) = -\tfrac{n}{2}\log(2\pi\sigma^2) - \tfrac{1}{2\sigma^2}\sum_{i=1}^n (x_i - \mu)^2\)\\
-    MLE: \(\hat{\mu}_{MLE} = \overline{X}_n\)
-  \end{block}
-\end{frame}
-
-\begin{frame}{MLE for Normal ($\mu$, $\sigma^2$ unknown)}
-  \footnotesize
-  \begin{center}
-    \includegraphics[width=0.8\textwidth]{figures/normal_full_mle.png}
-  \end{center}
-  \vspace{-0.7em}
-  \begin{block}{Joint Estimation}
-    \footnotesize
-    Model: \(X_i \sim \mathcal{N}(\mu, \sigma^2)\)\\
-    MLEs: \(\hat{\mu}_{MLE} = \overline{X}_n\), \(\hat{\sigma}^2_{MLE} = \tfrac{1}{n}\sum (x_i - \overline{X}_n)^2\)\\
-    Note: MLE uses \(n\), not \(n-1\)
-  \end{block}
-\end{frame}
-
-\begin{frame}{MLE for Poisson Parameter $\lambda$}
-  \footnotesize
-  \begin{center}
-    \includegraphics[width=0.9\textwidth]{figures/poisson_mle.png}
-  \end{center}
-  \vspace{-0.5em}
-  \begin{block}{Discrete Distribution MLE}
-    \small
-    Model: \(X_i \sim \text{Poisson}(\lambda)\)\\
-    Log-likelihood: \(\ell(\lambda) = \sum (x_i \log \lambda - \lambda - \log(x_i!))\)\\
-    MLE: \(\hat{\lambda}_{MLE} = \overline{X}_n\)
-  \end{block}
-\end{frame}
-
-\begin{frame}{Theoretical Properties of MLE}
-  \footnotesize
-  \begin{center}
-    \includegraphics[width=0.75\textwidth]{figures/mle_asymptotic_properties.png}
-  \end{center}
-  \vspace{-0.8em}
-  \begin{itemize}
-    \footnotesize
-    \item \textbf{Consistency:} \(\hat{\theta}_{MLE} \to \theta\)
-    \item \textbf{Asymptotic Normality:} \(\sqrt{n}(\hat{\theta}_{MLE} - \theta) \xrightarrow{d} \mathcal{N}(0, I(\theta)^{-1})\)
-    \item \textbf{Efficiency:} achieves the Cramér–Rao lower bound asymptotically
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Fisher Information}
-  \footnotesize
-  \begin{center}
-    \includegraphics[width=0.8\textwidth]{figures/fisher_information_concept.png}
-  \end{center}
-  \vspace{-0.7em}
-  \begin{block}{Definition \& Intuition}
-    \footnotesize
-    Fisher Information: \(I(\theta) = -\mathbb{E}\left[ \frac{\partial^2}{\partial \theta^2}\ell(\theta) \right]\)\\
-    High information → sharper peak → lower variance
-  \end{block}
-\end{frame}
-
-\begin{frame}{Strengths of MLE}
-  \footnotesize
-  \begin{center}
-    \includegraphics[width=0.8\textwidth]{figures/mle_strengths.png}
-  \end{center}
-  \vspace{-0.7em}
-  \begin{itemize}
-    \footnotesize
-    \item Works well for large \(n\) (asymptotic guarantees)
-    \item Very flexible, applicable to many models
-    \item \textbf{Invariance property:} if \(\hat{\theta}\) is MLE of \(\theta\), then \(g(\hat{\theta})\) is MLE of \(g(\theta)\)
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Limitations of MLE}
-  \footnotesize
-  \begin{center}
-    \includegraphics[width=0.8\textwidth]{figures/mle_limitations.png}
-  \end{center}
-  \vspace{-0.7em}
-  \begin{itemize}
-    \footnotesize
-    \item Small \(n\) → bias and instability
-    \item Non-identifiability → multiple maxima
-    \item Likelihood surface can be flat or multimodal
-    \item Sensitive to model misspecification
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{MLE: Strengths and Limitations}
-  \footnotesize
-  \begin{center}
-    \includegraphics[width=0.85\textwidth]{figures/mle_summary_comparison.png}
-  \end{center}
-  \vspace{-0.8em}
-  \begin{itemize}
-    \footnotesize
-    \item MLE is powerful and widely used
-    \item Asymptotically consistent, normal, and efficient
-    \item Must be cautious with small samples or misspecified models
-  \end{itemize}
-\end{frame}
-
+% ============================================================================
+% Section 3: Method of Moments
+% ============================================================================
 \section{Method of Moments}
+\input{sections/03-method-of-moments}
 
-\begin{frame}{Why another estimation method?}
-  \begin{itemize}
-    \item MLE is powerful, but sometimes hard to compute.
-    \item Method of Moments (MoM) offers a simpler alternative.
-    \item Idea: match sample moments with theoretical moments.
-  \end{itemize}
-  \begin{center}
-    \includegraphics[width=0.9\textwidth]{figures/mom_motivation.png}
-  \end{center}
-\end{frame}
+% \section{Fisher Information and SE}
 
-\begin{frame}{The Method of Moments}
-  \begin{itemize}
-    \item For model parameter $\theta$, theoretical moment:
-      \[ m_k(\theta) = \mathbb{E}_\theta[X^k]. \]
-    \item Empirical moment:
-      \[ \hat{m}_k = \tfrac{1}{n}\sum_{i=1}^n X_i^k. \]
-    \item Solve equations:
-      \[ m_k(\theta) = \hat{m}_k. \]
-  \end{itemize}
-  \begin{center}
-    \includegraphics[width=0.8\textwidth]{figures/mom_principle_diagram.png}
-  \end{center}
-\end{frame}
+% \begin{frame}{Fisher Information and Standard Errors}
+%   \begin{block}{Definitions}
+%     Fisher information: \(I(\theta) = \E\big[-\tfrac{\partial^2}{\partial\theta^2} \ell(\theta)\big]\). SE: \(\operatorname{SE}(\hat\theta) \approx \sqrt{I(\hat\theta)^{-1}/n}.\)
+%   \end{block}
+%   \begin{block}{Delta method}
+%     \small If \(\sqrt{n}(\hat\theta-\theta)\tod\mathcal N(0,\Sigma)\), then \(\sqrt{n}(g(\hat\theta)-g(\theta))\tod\mathcal N(0,\nabla g\,\Sigma\,\nabla g^\top).\)
+%   \end{block}
+%   \begin{exampleblock}{}
+%     \begin{columns}[T]
+%       \column{0.48\linewidth}
+%       {\centering\includegraphics{figures/fig_bern_loglik.png}\\[-1em]
+%       \scriptsize Likelihood.}
+%       \column{0.48\linewidth}
+%       {\centering\includegraphics{figures/fig_delta_log_var.png}\\[-1em]
+%       \scriptsize Delta method.}
+%     \end{columns}
+%   \end{exampleblock}
+% \end{frame}
 
-\begin{frame}{MoM for Bernoulli: Step-by-Step Derivation}
-  \textbf{Setting up the system of equations:}
-  \begin{align}
-    \text{Theoretical first moment:} \quad E[X] &= p \\
-    \text{Sample first moment:} \quad \hat{m}_1 &= \frac{1}{n}\sum_{i=1}^n X_i = \overline{X}_n
-  \end{align}
+% \begin{frame}{Score equations and Newton--Raphson}
+%   \begin{block}{Score}
+%     The score is \(U(\theta)=\partial \ell(\theta)/\partial\theta\). MLEs solve the \textbf{score equations} \(U(\hat\theta)=0\).
+%   \end{block}
+%   \begin{exampleblock}{Newton--Raphson (scalar)}
+%     Initialize \(\theta^{(0)}\). Iterate \(\theta^{(t+1)} = \theta^{(t)} - \dfrac{U(\theta^{(t)})}{U'(\theta^{(t)})}\). In multiple dimensions, replace derivatives with gradient and Hessian.
+%   \end{exampleblock}
+%   \begin{block}{Asymptotic normality (proof sketch)}
+%     Taylor expand the score around \(\theta_0\): \(0=U(\hat\theta)\approx U(\theta_0)+U'(\theta_0)(\hat\theta-\theta_0)\). Since \(U(\theta_0)=\mathcal{O}_p(\sqrt n)\) and \(-n^{-1}U'(\theta_0)\to I(\theta_0)\), it follows that \(\sqrt n (\hat\theta-\theta_0)\tod \mathcal N(0, I^{-1})\).
+%   \end{block}
+% \end{frame}
 
-  \vspace{0.3cm}
-  \textbf{Method of Moments equation:}
-  \begin{align}
-    E[X] &= \hat{m}_1 \\
-    p &= \overline{X}_n
-  \end{align}
+% \begin{frame}{Exponential families}
+%   \begin{block}{Form}
+%     \(f(x\mid\eta)=h(x)\exp\{\eta^\top T(x)-A(\eta)\}\), with natural parameter \(\eta\), sufficient statistic \(T\), log-partition \(A\).
+%   \end{block}
+%   \begin{itemize}
+%     \item \(\ell(\eta)=\sum_i \eta^\top T(x_i) - nA(\eta)+\text{const}\), concave in \(\eta\). MLE solves \(\nabla A(\hat\eta)=\bar T\).
+%     \item Fisher information: \(I(\eta)=n\,\nabla^2 A(\eta)=n\,\Var_\eta[T(X)]\).
+%   \end{itemize}
+%   \begin{exampleblock}{Examples}
+%     Bernoulli, Poisson, Normal with known variance (for the mean), Gamma with fixed shape, etc.
+%   \end{exampleblock}
+% \end{frame}
 
-  \vspace{0.3cm}
-  \textbf{Solving for the parameter:}
-  \begin{align}
-    \hat{p}_{MoM} &= \overline{X}_n
-  \end{align}
+% \begin{frame}{Cram\'er--Rao lower bound (CRLB)}
+%   \begin{block}{Bound}
+%     For any unbiased estimator \(\tilde\theta\) of scalar \(\theta\): \(\Var(\tilde\theta) \ge \dfrac{1}{n\,I(\theta)}\).
+%   \end{block}
+%   \begin{itemize}
+%     \item Equality holds for \textbf{efficient} estimators; asymptotically, MLE attains the bound under regularity.
+%     \item Multivariate version: \(\operatorname{Cov}(\tilde\theta) \succeq (n I(\theta))^{-1}\).
+%   \end{itemize}
+%   \begin{exampleblock}{Implication}
+%     The information \(I(\theta)\) sets a fundamental precision limit; designs that increase \(I\) (e.g., larger sample sizes, informative data) reduce variance.
+%   \end{exampleblock}
+% \end{frame}
 
-  \vspace{0.2cm}
-  \textit{This shows that MoM reduces to solving a simple algebraic equation!}
-\end{frame}
+% \section{Model Assessment}
 
-\begin{frame}{MoM for Bernoulli(p)}
-  \begin{itemize}
-    \item Theoretical mean: $E[X] = p$.
-    \item Sample mean: $\hat{m}_1 = \overline{X}_n$.
-    \item Solve: $\hat{p}_{MoM} = \overline{X}_n$.
-    \item Note: coincides with MLE.
-  \end{itemize}
-  \begin{center}
-    \includegraphics[width=0.9\textwidth]{figures/mom_bernoulli_example.png}
-  \end{center}
-\end{frame}
+% \begin{frame}{Assessing Estimators and Models}
+%   \begin{itemize}
+%     \item \textbf{Bias--Variance--MSE}: MSE = Bias$^2$ + Variance.
+%     \item \textbf{Likelihood profiles}: visualize curvature near \(\hat\theta\) to gauge uncertainty.
+%     \item \textbf{Parametric bootstrap}: resample from fitted model; approximate SE and CIs.
+%     \item Regularization and model selection are covered later in the course.
+%   \end{itemize}
+%   \begin{block}{Parametric bootstrap (algorithm)}
+%     \small Fit \(\hat\theta\). For \(b=1,\dots,B\): simulate \(x^{(b)}\sim f(\cdot\mid\hat\theta)\); compute \(\hat\theta^{(b)}\). Use the empirical sd of \(\{\hat\theta^{(b)}\}\) as \(\widehat{\operatorname{SE}}\); percentiles for CIs.
+%   \end{block}
+% \end{frame}
 
-\begin{frame}{MoM for Poisson: Step-by-Step Derivation}
-  \textbf{Setting up the system of equations:}
-  \begin{align}
-    \text{Theoretical first moment:} \quad E[X] &= \lambda \\
-    \text{Sample first moment:} \quad \hat{m}_1 &= \frac{1}{n}\sum_{i=1}^n X_i = \overline{X}_n
-  \end{align}
+% \section{Worked Examples}
 
-  \vspace{0.3cm}
-  \textbf{Method of Moments equation:}
-  \begin{align}
-    E[X] &= \hat{m}_1 \\
-    \lambda &= \overline{X}_n
-  \end{align}
+% \begin{frame}{Example: Exponential(\(\lambda\))}
+%   \begin{itemize}
+%     \item MLE: \(\hat\lambda=1/\bar x\); asymptotic SE: \(\operatorname{SE}(\hat\lambda)\approx \hat\lambda/\sqrt{n}.\)
+%     \item Compare with MoM: solve \(\E[X]=1/\lambda\Rightarrow \tilde\lambda=1/\bar x\) (same here).
+%   \end{itemize}
+%   \begin{block}{Derivation}
+%     \small\raggedright \(\ell(\lambda)=n\log\lambda-\lambda\sum x_i\Rightarrow \partial\ell/\partial\lambda=\tfrac{n}{\lambda}-\sum x_i=0 \Rightarrow \hat\lambda=1/\bar x.\) Info: \(I(\lambda)=n/\lambda^2\).
+%   \end{block}
+% \end{frame}
 
-  \vspace{0.3cm}
-  \textbf{Solving for the parameter:}
-  \begin{align}
-    \hat{\lambda}_{MoM} &= \overline{X}_n
-  \end{align}
+% \begin{frame}{Example: Normal(\(\mu,\sigma^2\))}
+%   Joint MLEs: \(\hat\mu=\bar x\), \(\widehat{\sigma^2}=\tfrac{1}{n}\sum (x_i-\bar x)^2\) (biased). Unbiased variance uses \(\tfrac{1}{n-1}\).
+%   \medskip
+%   \begin{itemize}
+%     \item Asymptotic var: \(\Var(\hat\mu)\approx \sigma^2/n\); \(\Var(\widehat{\sigma^2})\) from information or delta method.
+%   \end{itemize}
+%   \begin{block}{Derivation sketch}
+%     \small\raggedright \(\ell(\mu,\sigma^2)=-\tfrac{n}{2}\log(2\pi\sigma^2)-\tfrac{1}{2\sigma^2}\sum (x_i-\mu)^2\). Partial derivatives yield the stated MLEs.
+%   \end{block}
+% \end{frame}
 
-  \vspace{0.2cm}
-  \textit{Again, we solve a simple equation: parameter = sample mean!}
-\end{frame}
+% \section{Exercises and Practical}
 
-\begin{frame}{MoM for Poisson($\lambda$)}
-  \begin{itemize}
-    \item Theoretical mean: $E[X] = \lambda$.
-    \item Sample mean: $\hat{m}_1 = \overline{X}_n$.
-    \item Solve: $\hat{\lambda}_{MoM} = \overline{X}_n$.
-    \item Note: coincides with MLE.
-  \end{itemize}
-  \begin{center}
-    \includegraphics[width=0.9\textwidth]{figures/mom_poisson_example.png}
-  \end{center}
-\end{frame}
+% \begin{frame}{Short Exercises}
+%   \small
+%   \begin{enumerate}
+%     \item Binomial(\(n,p\)), known \(n\): show MLE \(\hat p=\bar x/n\) equals MoM.
+%     \item Uniform(0,\(\theta\)): derive MLE and discuss the bias of the maximum statistic.
+%     \item Delta method: if \(\hat\theta\sim \mathcal N(\theta,\sigma^2/n)\), derive \(\Var(\log \hat\theta)\) to first order.
+%   \end{enumerate}
+%   \begin{alertblock}{Hint for 2}
+%     \small Order statistic \(X_{(n)}=\max X_i\) has CDF \((x/\theta)^n\) on \([0,\theta]\); compute \(\E[X_{(n)}]\) to analyze bias.
+%   \end{alertblock}
+% \end{frame}
 
-\begin{frame}{MoM for Normal: Step-by-Step Derivation}
-  \textbf{Setting up the system of equations (2 parameters $\Rightarrow$ 2 moments):}
-  \begin{align}
-    \text{Theoretical moments:} \quad E[X] &= \mu, \quad E[X^2] = \mu^2 + \sigma^2 \\
-    \text{Sample moments:} \quad \hat{m}_1 &= \overline{X}_n, \quad \hat{m}_2 = \frac{1}{n}\sum_{i=1}^n X_i^2
-  \end{align}
+% \begin{frame}{Practical Preview}
+%   We'll simulate to compare MLE and MoM and use bootstrap for SEs.
+%   \begin{itemize}
+%     \item Keep code deterministic (set a RNG seed).
+%     \item Use \texttt{numpy}, \texttt{scipy}, and \texttt{pandas} as needed. See course style guide.
+%   \end{itemize}
+%   \begin{exampleblock}{Figure generation}
+%     \small\raggedright Likelihood profile and delta-method visuals are generated by \texttt{figures/make\_figures.py} (Python).
+%   \end{exampleblock}
+% \end{frame}
 
-  \textbf{Method of Moments equations:}
-  \begin{align}
-    \mu &= \overline{X}_n \\
-    \mu^2 + \sigma^2 &= \hat{m}_2
-  \end{align}
-
-  \textbf{Solving the system:}
-  \begin{align}
-    \hat{\mu}_{MoM} &= \overline{X}_n \\
-    \hat{\sigma}^2_{MoM} &= \hat{m}_2 - (\hat{\mu}_{MoM})^2 = \hat{m}_2 - (\overline{X}_n)^2
-  \end{align}
-
-  \textit{Two parameters require solving a system of two equations!}
-\end{frame}
-
-\begin{frame}{MoM for Normal($\mu$, $\sigma^2$)}
-  \begin{itemize}
-    \item $E[X] = \mu$, $E[X^2] = \mu^2 + \sigma^2$.
-    \item Empirical moments:
-      $\hat{m}_1 = \overline{X}_n$, $\hat{m}_2 = \tfrac{1}{n}\sum X_i^2$.
-    \item Solve:
-      \[ \hat{\mu}_{MoM} = \overline{X}_n, \quad \hat{\sigma}^2_{MoM} = \hat{m}_2 - (\overline{X}_n)^2. \]
-  \end{itemize}
-  \begin{center}
-    \includegraphics[width=0.9\textwidth]{figures/mom_normal_example.png}
-  \end{center}
-\end{frame}
-
-\begin{frame}{MLE vs MoM: Similarities and Differences}
-  \begin{itemize}
-    \item Both provide consistent estimators (under conditions).
-    \item MLE is asymptotically efficient; MoM is not guaranteed to be.
-    \item MoM often easier to compute (simple equations).
-    \item MoM can give nonsensical estimates (e.g., negative variance).
-    \item In simple models, MLE = MoM.
-  \end{itemize}
-  \begin{center}
-    \includegraphics[width=0.8\textwidth]{figures/mle_vs_mom_comparison.png}
-  \end{center}
-\end{frame}
-
-\begin{frame}{Normal Variance Estimate (MLE vs MoM)}
-  \begin{itemize}
-    \item MLE:
-      \[ \hat{\sigma}^2_{MLE} = \tfrac{1}{n}\sum (X_i - \overline{X}_n)^2. \]
-    \item MoM:
-      \[ \hat{\sigma}^2_{MoM} = \hat{m}_2 - (\overline{X}_n)^2. \]
-    \item Here they are equal, but in other models they may differ.
-  \end{itemize}
-  \begin{center}
-    \includegraphics[width=0.9\textwidth]{figures/normal_variance_mle_mom.png}
-  \end{center}
-\end{frame}
-
-\begin{frame}{MLE vs MoM: Summary}
-  \begin{center}
-    \includegraphics[width=0.95\textwidth]{figures/mle_mom_summary_table.png}
-  \end{center}
-\end{frame}
-
-\begin{frame}{Key Takeaways: Method of Moments}
-  \begin{itemize}
-    \item MoM: intuitive, simple, often first attempt.
-    \item MLE: more powerful, statistically optimal in large samples.
-    \item Both are fundamental tools in parameter estimation.
-  \end{itemize}
-  \begin{center}
-    \includegraphics[width=0.8\textwidth]{figures/mom_takeaways.png}
-  \end{center}
-\end{frame}
-
-\section{Fisher Information and SE}
-
-\begin{frame}{Fisher Information and Standard Errors}
-  \begin{block}{Definitions}
-    Fisher information: \(I(\theta) = \E\big[-\tfrac{\partial^2}{\partial\theta^2} \ell(\theta)\big]\). SE: \(\operatorname{SE}(\hat\theta) \approx \sqrt{I(\hat\theta)^{-1}/n}.\)
-  \end{block}
-  \begin{block}{Delta method}
-    \small If \(\sqrt{n}(\hat\theta-\theta)\tod\mathcal N(0,\Sigma)\), then \(\sqrt{n}(g(\hat\theta)-g(\theta))\tod\mathcal N(0,\nabla g\,\Sigma\,\nabla g^\top).\)
-  \end{block}
-  \begin{exampleblock}{}
-    \begin{columns}[T]
-      \column{0.48\linewidth}
-      {\centering\includegraphics{figures/fig_bern_loglik.png}\\[-1em]
-      \scriptsize Likelihood.}
-      \column{0.48\linewidth}
-      {\centering\includegraphics{figures/fig_delta_log_var.png}\\[-1em]
-      \scriptsize Delta method.}
-    \end{columns}
-  \end{exampleblock}
-\end{frame}
-
-\begin{frame}{Score equations and Newton--Raphson}
-  \begin{block}{Score}
-    The score is \(U(\theta)=\partial \ell(\theta)/\partial\theta\). MLEs solve the \textbf{score equations} \(U(\hat\theta)=0\).
-  \end{block}
-  \begin{exampleblock}{Newton--Raphson (scalar)}
-    Initialize \(\theta^{(0)}\). Iterate \(\theta^{(t+1)} = \theta^{(t)} - \dfrac{U(\theta^{(t)})}{U'(\theta^{(t)})}\). In multiple dimensions, replace derivatives with gradient and Hessian.
-  \end{exampleblock}
-  \begin{block}{Asymptotic normality (proof sketch)}
-    Taylor expand the score around \(\theta_0\): \(0=U(\hat\theta)\approx U(\theta_0)+U'(\theta_0)(\hat\theta-\theta_0)\). Since \(U(\theta_0)=\mathcal{O}_p(\sqrt n)\) and \(-n^{-1}U'(\theta_0)\to I(\theta_0)\), it follows that \(\sqrt n (\hat\theta-\theta_0)\tod \mathcal N(0, I^{-1})\).
-  \end{block}
-\end{frame}
-
-\begin{frame}{Exponential families}
-  \begin{block}{Form}
-    \(f(x\mid\eta)=h(x)\exp\{\eta^\top T(x)-A(\eta)\}\), with natural parameter \(\eta\), sufficient statistic \(T\), log-partition \(A\).
-  \end{block}
-  \begin{itemize}
-    \item \(\ell(\eta)=\sum_i \eta^\top T(x_i) - nA(\eta)+\text{const}\), concave in \(\eta\). MLE solves \(\nabla A(\hat\eta)=\bar T\).
-    \item Fisher information: \(I(\eta)=n\,\nabla^2 A(\eta)=n\,\Var_\eta[T(X)]\).
-  \end{itemize}
-  \begin{exampleblock}{Examples}
-    Bernoulli, Poisson, Normal with known variance (for the mean), Gamma with fixed shape, etc.
-  \end{exampleblock}
-\end{frame}
-
-\begin{frame}{Cram\'er--Rao lower bound (CRLB)}
-  \begin{block}{Bound}
-    For any unbiased estimator \(\tilde\theta\) of scalar \(\theta\): \(\Var(\tilde\theta) \ge \dfrac{1}{n\,I(\theta)}\).
-  \end{block}
-  \begin{itemize}
-    \item Equality holds for \textbf{efficient} estimators; asymptotically, MLE attains the bound under regularity.
-    \item Multivariate version: \(\operatorname{Cov}(\tilde\theta) \succeq (n I(\theta))^{-1}\).
-  \end{itemize}
-  \begin{exampleblock}{Implication}
-    The information \(I(\theta)\) sets a fundamental precision limit; designs that increase \(I\) (e.g., larger sample sizes, informative data) reduce variance.
-  \end{exampleblock}
-\end{frame}
-
-\section{Model Assessment}
-
-\begin{frame}{Assessing Estimators and Models}
-  \begin{itemize}
-    \item \textbf{Bias--Variance--MSE}: MSE = Bias$^2$ + Variance.
-    \item \textbf{Likelihood profiles}: visualize curvature near \(\hat\theta\) to gauge uncertainty.
-    \item \textbf{Parametric bootstrap}: resample from fitted model; approximate SE and CIs.
-    \item Regularization and model selection are covered later in the course.
-  \end{itemize}
-  \begin{block}{Parametric bootstrap (algorithm)}
-    \small Fit \(\hat\theta\). For \(b=1,\dots,B\): simulate \(x^{(b)}\sim f(\cdot\mid\hat\theta)\); compute \(\hat\theta^{(b)}\). Use the empirical sd of \(\{\hat\theta^{(b)}\}\) as \(\widehat{\operatorname{SE}}\); percentiles for CIs.
-  \end{block}
-\end{frame}
-
-\section{Worked Examples}
-
-\begin{frame}{Example: Exponential(\(\lambda\))}
-  \begin{itemize}
-    \item MLE: \(\hat\lambda=1/\bar x\); asymptotic SE: \(\operatorname{SE}(\hat\lambda)\approx \hat\lambda/\sqrt{n}.\)
-    \item Compare with MoM: solve \(\E[X]=1/\lambda\Rightarrow \tilde\lambda=1/\bar x\) (same here).
-  \end{itemize}
-  \begin{block}{Derivation}
-    \small\raggedright \(\ell(\lambda)=n\log\lambda-\lambda\sum x_i\Rightarrow \partial\ell/\partial\lambda=\tfrac{n}{\lambda}-\sum x_i=0 \Rightarrow \hat\lambda=1/\bar x.\) Info: \(I(\lambda)=n/\lambda^2\).
-  \end{block}
-\end{frame}
-
-\begin{frame}{Example: Normal(\(\mu,\sigma^2\))}
-  Joint MLEs: \(\hat\mu=\bar x\), \(\widehat{\sigma^2}=\tfrac{1}{n}\sum (x_i-\bar x)^2\) (biased). Unbiased variance uses \(\tfrac{1}{n-1}\).
-  \medskip
-  \begin{itemize}
-    \item Asymptotic var: \(\Var(\hat\mu)\approx \sigma^2/n\); \(\Var(\widehat{\sigma^2})\) from information or delta method.
-  \end{itemize}
-  \begin{block}{Derivation sketch}
-    \small\raggedright \(\ell(\mu,\sigma^2)=-\tfrac{n}{2}\log(2\pi\sigma^2)-\tfrac{1}{2\sigma^2}\sum (x_i-\mu)^2\). Partial derivatives yield the stated MLEs.
-  \end{block}
-\end{frame}
-
-\section{Exercises and Practical}
-
-\begin{frame}{Short Exercises}
-  \small
-  \begin{enumerate}
-    \item Binomial(\(n,p\)), known \(n\): show MLE \(\hat p=\bar x/n\) equals MoM.
-    \item Uniform(0,\(\theta\)): derive MLE and discuss the bias of the maximum statistic.
-    \item Delta method: if \(\hat\theta\sim \mathcal N(\theta,\sigma^2/n)\), derive \(\Var(\log \hat\theta)\) to first order.
-  \end{enumerate}
-  \begin{alertblock}{Hint for 2}
-    \small Order statistic \(X_{(n)}=\max X_i\) has CDF \((x/\theta)^n\) on \([0,\theta]\); compute \(\E[X_{(n)}]\) to analyze bias.
-  \end{alertblock}
-\end{frame}
-
-\begin{frame}{Practical Preview}
-  We'll simulate to compare MLE and MoM and use bootstrap for SEs.
-  \begin{itemize}
-    \item Keep code deterministic (set a RNG seed).
-    \item Use \texttt{numpy}, \texttt{scipy}, and \texttt{pandas} as needed. See course style guide.
-  \end{itemize}
-  \begin{exampleblock}{Figure generation}
-    \small\raggedright Likelihood profile and delta-method visuals are generated by \texttt{figures/make\_figures.py} (Python).
-  \end{exampleblock}
-\end{frame}
-
-\begin{frame}{Summary}
-  \begin{itemize}
-    \item MLE and MoM provide complementary routes to estimation.
-    \item Fisher information and the delta method quantify uncertainty.
-    \item Simulation and bootstrap help validate asymptotics.
-  \end{itemize}
-\end{frame}
+% \begin{frame}{Summary}
+%   \begin{itemize}
+%     \item MLE and MoM provide complementary routes to estimation.
+%     \item Fisher information and the delta method quantify uncertainty.
+%     \item Simulation and bootstrap help validate asymptotics.
+%   \end{itemize}
+% \end{frame}
 
 \end{document}

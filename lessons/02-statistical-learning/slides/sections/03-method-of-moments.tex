@@ -1,0 +1,178 @@
+% Section: Method of Moments
+% This section introduces the Method of Moments (MoM) as an alternative
+% to MLE, with examples and comparisons between the two approaches.
+
+\begin{frame}{Why another estimation method?}
+  \begin{itemize}
+    \item MLE is powerful, but sometimes hard to compute.
+    \item Method of Moments (MoM) offers a simpler alternative.
+    \item Idea: match sample moments with theoretical moments.
+  \end{itemize}
+  \begin{center}
+    \includegraphics[width=0.9\textwidth]{figures/mom_motivation.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}{The Method of Moments}
+  \begin{itemize}
+    \item For model parameter $\theta$, theoretical moment:
+      \[ m_k(\theta) = \mathbb{E}_\theta[X^k]. \]
+    \item Empirical moment:
+      \[ \hat{m}_k = \tfrac{1}{n}\sum_{i=1}^n X_i^k. \]
+    \item Solve equations:
+      \[ m_k(\theta) = \hat{m}_k. \]
+  \end{itemize}
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{figures/mom_principle_diagram.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}{MoM for Bernoulli: Step-by-Step Derivation}
+  \textbf{Setting up the system of equations:}
+  \begin{align}
+    \text{Theoretical first moment:} \quad E[X] &= p \\
+    \text{Sample first moment:} \quad \hat{m}_1 &= \frac{1}{n}\sum_{i=1}^n X_i = \overline{X}_n
+  \end{align}
+
+  \vspace{0.3cm}
+  \textbf{Method of Moments equation:}
+  \begin{align}
+    E[X] &= \hat{m}_1 \\
+    p &= \overline{X}_n
+  \end{align}
+
+  \vspace{0.3cm}
+  \textbf{Solving for the parameter:}
+  \begin{align}
+    \hat{p}_{MoM} &= \overline{X}_n
+  \end{align}
+
+  \vspace{0.2cm}
+  \textit{This shows that MoM reduces to solving a simple algebraic equation!}
+\end{frame}
+
+\begin{frame}{MoM for Bernoulli(p)}
+  \begin{itemize}
+    \item Theoretical mean: $E[X] = p$.
+    \item Sample mean: $\hat{m}_1 = \overline{X}_n$.
+    \item Solve: $\hat{p}_{MoM} = \overline{X}_n$.
+    \item Note: coincides with MLE.
+  \end{itemize}
+  \begin{center}
+    \includegraphics[width=0.9\textwidth]{figures/mom_bernoulli_example.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}{MoM for Poisson: Step-by-Step Derivation}
+  \textbf{Setting up the system of equations:}
+  \begin{align}
+    \text{Theoretical first moment:} \quad E[X] &= \lambda \\
+    \text{Sample first moment:} \quad \hat{m}_1 &= \frac{1}{n}\sum_{i=1}^n X_i = \overline{X}_n
+  \end{align}
+
+  \vspace{0.3cm}
+  \textbf{Method of Moments equation:}
+  \begin{align}
+    E[X] &= \hat{m}_1 \\
+    \lambda &= \overline{X}_n
+  \end{align}
+
+  \vspace{0.3cm}
+  \textbf{Solving for the parameter:}
+  \begin{align}
+    \hat{\lambda}_{MoM} &= \overline{X}_n
+  \end{align}
+
+  \vspace{0.2cm}
+  \textit{Again, we solve a simple equation: parameter = sample mean!}
+\end{frame}
+
+\begin{frame}{MoM for Poisson($\lambda$)}
+  \begin{itemize}
+    \item Theoretical mean: $E[X] = \lambda$.
+    \item Sample mean: $\hat{m}_1 = \overline{X}_n$.
+    \item Solve: $\hat{\lambda}_{MoM} = \overline{X}_n$.
+    \item Note: coincides with MLE.
+  \end{itemize}
+  \begin{center}
+    \includegraphics[width=0.9\textwidth]{figures/mom_poisson_example.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}{MoM for Normal: Step-by-Step Derivation}
+  \textbf{Setting up the system of equations (2 parameters $\Rightarrow$ 2 moments):}
+  \begin{align}
+    \text{Theoretical moments:} \quad E[X] &= \mu, \quad E[X^2] = \mu^2 + \sigma^2 \\
+    \text{Sample moments:} \quad \hat{m}_1 &= \overline{X}_n, \quad \hat{m}_2 = \frac{1}{n}\sum_{i=1}^n X_i^2
+  \end{align}
+
+  \textbf{Method of Moments equations:}
+  \begin{align}
+    \mu &= \overline{X}_n \\
+    \mu^2 + \sigma^2 &= \hat{m}_2
+  \end{align}
+
+  \textbf{Solving the system:}
+  \begin{align}
+    \hat{\mu}_{MoM} &= \overline{X}_n \\
+    \hat{\sigma}^2_{MoM} &= \hat{m}_2 - (\hat{\mu}_{MoM})^2 = \hat{m}_2 - (\overline{X}_n)^2
+  \end{align}
+
+  \textit{Two parameters require solving a system of two equations!}
+\end{frame}
+
+\begin{frame}{MoM for Normal($\mu$, $\sigma^2$)}
+  \begin{itemize}
+    \item $E[X] = \mu$, $E[X^2] = \mu^2 + \sigma^2$.
+    \item Empirical moments:
+      $\hat{m}_1 = \overline{X}_n$, $\hat{m}_2 = \tfrac{1}{n}\sum X_i^2$.
+    \item Solve:
+      \[ \hat{\mu}_{MoM} = \overline{X}_n, \quad \hat{\sigma}^2_{MoM} = \hat{m}_2 - (\overline{X}_n)^2. \]
+  \end{itemize}
+  \begin{center}
+    \includegraphics[width=0.9\textwidth]{figures/mom_normal_example.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}{MLE vs MoM: Similarities and Differences}
+  \begin{itemize}
+    \item Both provide consistent estimators (under conditions).
+    \item MLE is asymptotically efficient; MoM is not guaranteed to be.
+    \item MoM often easier to compute (simple equations).
+    \item MoM can give nonsensical estimates (e.g., negative variance).
+    \item In simple models, MLE = MoM.
+  \end{itemize}
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{figures/mle_vs_mom_comparison.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Normal Variance Estimate (MLE vs MoM)}
+  \begin{itemize}
+    \item MLE:
+      \[ \hat{\sigma}^2_{MLE} = \tfrac{1}{n}\sum (X_i - \overline{X}_n)^2. \]
+    \item MoM:
+      \[ \hat{\sigma}^2_{MoM} = \hat{m}_2 - (\overline{X}_n)^2. \]
+    \item Here they are equal, but in other models they may differ.
+  \end{itemize}
+  \begin{center}
+    \includegraphics[width=0.9\textwidth]{figures/normal_variance_mle_mom.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}{MLE vs MoM: Summary}
+  \begin{center}
+    \includegraphics[width=0.95\textwidth]{figures/mle_mom_summary_table.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Key Takeaways: Method of Moments}
+  \begin{itemize}
+    \item MoM: intuitive, simple, often first attempt.
+    \item MLE: more powerful, statistically optimal in large samples.
+    \item Both are fundamental tools in parameter estimation.
+  \end{itemize}
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{figures/mom_takeaways.png}
+  \end{center}
+\end{frame}

@@ -1,0 +1,164 @@
+% Section: Maximum Likelihood Estimation - Likelihood Concepts
+% This section introduces parameter estimation, likelihood vs probability,
+% and the maximum likelihood principle.
+
+\subsection{Likelihood}
+
+\begin{frame}{Parameter Estimation: Why Do We Care?}
+  \footnotesize
+  \begin{center}
+    \includegraphics[width=0.75\textwidth]{figures/mle_motivation.png}
+  \end{center}
+  \vspace{-0.7em}
+  \begin{block}{The Central Question}
+    \small Given observed data, what parameter values make this data most plausible under our model?
+  \end{block}
+  \vspace{-0.1em}
+  \begin{itemize}
+    \item We have data \(x_1, x_2, \ldots, x_n\)
+    \item We assume a probabilistic model \(f(x \mid \theta)\)
+    \item We want to find the ``best'' estimate \(\hat{\theta}\)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Probability vs. Likelihood: The Key Duality}
+  \begin{center}
+    \includegraphics[width=0.75\textwidth]{figures/probability_likelihood_duality.png}
+  \end{center}
+  \vspace{-0.7em}
+  \begin{columns}[T]
+  \column{0.48\linewidth}
+  \begin{block}{Probability}
+    \small Fixed \(\theta\), varying data \(x\)\\
+    \(P(X = x \mid \theta)\)
+  \end{block}
+  \column{0.48\linewidth}
+  \begin{block}{Likelihood}
+    \small Fixed data \(x\), varying \(\theta\)\\
+    \(L(\theta \mid x) \propto P(X = x \mid \theta)\)
+  \end{block}
+  \end{columns}
+  \vspace{-0.1em}
+  \begin{exampleblock}{Key Insight}
+    \small Same mathematical function, but we're asking different questions!
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}{What is the Likelihood Function?}
+  \begin{center}
+    \includegraphics[width=0.65\textwidth]{figures/likelihood_function_concept.png}
+  \end{center}
+  \vspace{-0.7em}
+  \begin{block}{Definition}
+    \footnotesize For observed data \(x_1, \ldots, x_n\) and model \(f(x \mid \theta)\):
+    \[L(\theta) = \prod_{i=1}^n f(x_i \mid \theta)\]
+  \end{block}
+  \vspace{-0.2em}
+  \begin{itemize}
+    \footnotesize
+    \item Measures how well parameter \(\theta\) explains the observed data
+    \item Higher likelihood \(\Rightarrow\) parameter is more supported by data
+    \item Often work with log-likelihood: \(\ell(\theta) = \sum_{i=1}^n \log f(x_i \mid \theta)\)
+  \end{itemize}
+\end{frame}
+
+\subsection{Maximum Likelihood Estimate}
+
+\begin{frame}{The Maximum Likelihood Principle}
+  \begin{center}
+    \includegraphics[width=0.55\textwidth]{figures/mle_principle.png}
+  \end{center}
+  \vspace{-0.9em}
+  \begin{block}{MLE Definition}
+    \footnotesize The Maximum Likelihood Estimator (MLE) is:
+    \[\hat{\theta}_{\text{MLE}} = \arg\max_{\theta} L(\theta) = \arg\max_{\theta} \ell(\theta)\]
+  \end{block}
+  \vspace{-0.3em}
+  \begin{exampleblock}{Intuition}
+    \footnotesize Choose the parameter value that makes our observed data as likely as possible.
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}{From Likelihood to Log-Likelihood}
+  \footnotesize
+  \begin{center}
+    \includegraphics[width=0.85\textwidth]{figures/likelihood_to_log_likelihood.png}
+  \end{center}
+  \vspace{-0.7em}
+  \begin{itemize}
+    \item Likelihood is a product of terms: \(L(\theta) = \prod_{i=1}^n f_\theta(x_i)\)
+    \item Products are difficult to optimize when \(n\) is large
+    \item Take the log to simplify: \(\ell(\theta) = \log L(\theta) = \sum_{i=1}^n \log f_\theta(x_i)\)
+    \item Since log is strictly increasing, maximizing \(L\) or \(\ell\) is equivalent
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Why use log-likelihood in practice?}
+  \footnotesize
+  \begin{center}
+    \includegraphics[width=0.72\textwidth]{figures/log_likelihood_benefits.png}
+  \end{center}
+  \vspace{-0.7em}
+  \begin{itemize}
+    \item \textbf{Numerical stability:} avoids underflow when multiplying many small numbers
+    \item \textbf{Simplifies optimization:} turns products into sums, easier differentiation
+    \item \textbf{Reveals structure:} concavity/convexity properties often clearer
+    \item \textbf{Same maximum:} \(\arg\max L(\theta) = \arg\max \ell(\theta)\)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Log-Likelihood for the Bernoulli Model}
+  \footnotesize
+  \begin{center}
+    \includegraphics[width=0.72\textwidth]{figures/bernoulli_likelihood_comparison.png}
+  \end{center}
+  \vspace{-0.7em}
+  \begin{block}{Bernoulli Case}
+    \small
+    Likelihood: \(L(p) = p^{\sum x_i}(1-p)^{n-\sum x_i}\)\\
+    Log-likelihood: \(\ell(p) = (\sum x_i) \log p + (n - \sum x_i) \log(1-p)\)\\
+    Easier to differentiate, leads to closed-form solution: \(\hat{p} = \tfrac{1}{n}\sum x_i\)
+  \end{block}
+\end{frame}
+
+\begin{frame}{Example: Coin Flips (Bernoulli Model)}
+  \textbf{Setup:} \(n\) coin flips, \(k\) heads observed. Model: \(X_i \sim \text{Bernoulli}(p)\)
+
+  \vspace{0.3em}
+  \textbf{Likelihood:} \(L(p) = p^k (1-p)^{n-k}\)
+
+  \vspace{0.3em}
+  \textbf{Log-likelihood:} \(\ell(p) = k \log p + (n-k) \log(1-p)\)
+
+  \vspace{0.3em}
+  \textbf{Find MLE:} \(\frac{d\ell}{dp} = \frac{k}{p} - \frac{n-k}{1-p} = 0\)
+
+  \vspace{0.3em}
+  \begin{block}{Result}
+    \[\hat{p}_{\text{MLE}} = \frac{k}{n} = \bar{x}\]
+  \end{block}
+
+  \vspace{0.2em}
+  \begin{exampleblock}{Makes Sense!}
+    \small The proportion of heads in our sample is the most likely value for the coin's bias.
+  \end{exampleblock}
+\end{frame}
+
+\begin{frame}{MLE: Key Takeaways}
+  \footnotesize
+  \begin{center}
+    \includegraphics[width=0.75\textwidth]{figures/mle_workflow.png}
+  \end{center}
+  \vspace{-1.2em}
+  \begin{itemize}
+    \item \textbf{Intuitive:} Choose parameters that best explain observed data
+    \item \textbf{General:} Works for any probabilistic model
+    \item \textbf{Principled:} Solid theoretical foundation
+    \item \textbf{Practical:} Often gives closed-form solutions
+  \end{itemize}
+
+  \vspace{-0.5em}
+  \begin{alertblock}{Coming Up}
+    \small More examples, properties, and when MLE works well (or doesn't!)
+  \end{alertblock}
+\end{frame}
