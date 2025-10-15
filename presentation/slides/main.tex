@@ -1,0 +1,63 @@
+% !TeX program = xelatex
+\documentclass{beamer}
+
+% Theme
+\usetheme{Madrid}
+\usecolortheme{default}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm, dsfont}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{hyperref}
+
+% Macros (standardized notation)
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Var}{\operatorname{Var}}
+
+% Helper for robust top-line commands (avoids fragile leading-backslash insertion issues)
+\newcommand{\robustcmd}[1]{\csname #1\endcsname}
+
+% Title (robust invocation)
+\robustcmd{title}{Applied Statistics Course}
+\robustcmd{subtitle}{Course Overview and Goals}
+\robustcmd{author}{Stéphane Rivaud}
+\robustcmd{institute}{INRIA Saclay}
+\robustcmd{date}{September 2025}
+
+% Begin document
+\begin{document}
+
+% ============================================================================
+% Title Page
+% ============================================================================
+\begin{frame}
+  \robustcmd{titlepage}
+\end{frame}
+
+% ============================================================================
+% Section 1: Course Goals and Learning Outcomes
+% ============================================================================
+\input{sections/01-goals}
+
+% ============================================================================
+% Section 2: Course Structure
+% ============================================================================
+\input{sections/02-structure}
+
+% ============================================================================
+% Section 3: Assessment and Tools
+% ============================================================================
+\input{sections/03-assessment}
+
+% ============================================================================
+% Section 4: Course Philosophy and Responsible AI Use
+% ============================================================================
+\input{sections/04-philosophy}
+
+\end{document}

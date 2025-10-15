@@ -1,0 +1,26 @@
+# LaTeX build artifacts
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+
+# Build directory
+build/
+
+# Backup files
+*~
+*.bak
+*.swp
+*.swo
+
+# macOS
+.DS_Store
+
+# Editor temp files
+.*.swp
+.*.swo
