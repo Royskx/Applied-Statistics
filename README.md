@@ -113,7 +113,7 @@ This installs:
 jupyter lab
 ```
 
-Navigate to `labs/Subjects/` and open a notebook to get started!
+Navigate to `labs/` and open the notebook for the current lab.
 
 ### 4. Alternative: Google Colab
 
