@@ -27,9 +27,8 @@ The course overview presentation provides:
    - Lesson 01: Statistical Modeling (Random variables, LLN/CLT)
    - Lesson 02: Parameter Estimation (MLE, Method of Moments, Fisher Information)
    - Lesson 03: Estimator Properties (Bias, variance, MSE, confidence intervals)
-   - Lesson 04: Hypothesis Testing I (Foundations, one-sample tests)
-   - Lesson 05: Hypothesis Testing II (Two-sample, categorical, multiple testing)
-   - Lesson 06: Final Coding Project
+
+> **Note:** Lessons 04–06 will be added to the public branch once they are released to students.
 
 3. **Assessment and Tools**
    - Practicals (50%): Short labs and written tests
@@ -48,8 +47,7 @@ The course overview presentation provides:
 ```
 presentation/
 ├── README.md              # This file - overview and documentation
-├── slides.pdf             # Compiled presentation (output)
-└── slides/                # Source files and build system
+└── course_overview.pdf    # Precompiled deck distributed to students
     ├── README.md          # Developer guide and build instructions
     ├── Makefile           # Build automation
     ├── .gitignore         # Ignore build artifacts
@@ -70,23 +68,14 @@ To view the course overview presentation:
 
 ```bash
 # View the compiled PDF
-open slides.pdf
+open course_overview.pdf
 ```
 
 The presentation is typically shown on the first day of class to introduce the course structure and expectations.
 
 ### For Instructors/Maintainers
 
-To modify and rebuild the presentation:
-
-```bash
-cd slides/
-make              # Compile the presentation
-make clean        # Remove build artifacts
-make help         # Show all available targets
-```
-
-See `slides/README.md` for detailed build instructions and contribution guidelines.
+The development branch retains the full LaTeX sources. If you need to rebuild or update the deck, switch to `dev`, regenerate the PDF there, and copy the compiled result back to `presentation/course_overview.pdf` before syncing to `public-main`.
 
 ## Prerequisites
 
