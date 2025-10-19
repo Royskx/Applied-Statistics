@@ -66,7 +66,7 @@ Interactive Jupyter notebooks for hands-on practice. Completed labs include both
 ### 🧾 Final Project (`projects/birds-biodiversity/`)
 
 - `data/raw/Observations 2012-2025.xlsx` – primary dataset for the capstone.
-- `docs/final_project_assignment.md` – detailed brief outlining objectives, deliverables, and submission rules.
+- `final_project_assignment.pdf` – detailed brief outlining objectives, deliverables, and submission rules.
 - Use this folder as the starting point for your analysis; create your own notebooks/scripts to keep the workflow reproducible.
 
 ### 📊 Data (`shared/data/`)
