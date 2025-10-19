@@ -128,12 +128,12 @@ You can also run notebooks in Google Colab:
 
 1. **Before class**: Read the lesson material in `lessons/XX-topic/`
 2. **During class**: Follow along with slides and examples
-3. **After class**: Complete the lab assignment in `labs/Subjects/`
+3. **After class**: Complete the lab assignment in the corresponding `labs/XX-topic/` folder
 4. **Practice**: Work through exercises in `lessons/XX-topic/exercises/`
 
 ### Completing Lab Assignments
 
-1. Open the notebook in `labs/Subjects/`
+1. Open the notebook in the numbered `labs/XX-topic/` directory for that session
 2. Read instructions carefully
 3. Write your code in the designated cells
 4. Test your code thoroughly
