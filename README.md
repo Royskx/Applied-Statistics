@@ -40,14 +40,28 @@ Each lesson folder contains:
 
 > **Note**: Additional lessons (04-06) will be released throughout the semester.
 
-### 🧪 Lab Sessions (`labs/Subjects/`)
+### 🧪 Lab Sessions (`labs/`)
 
-Interactive Jupyter notebooks for hands-on practice:
+Interactive Jupyter notebooks for hands-on practice. Completed labs include both the assignment and a worked solution; in-progress topics ship the assignment only.
 
-1. **Random Variables** - Working with distributions and simulation
-2. **Maximum Likelihood Estimation** - Parameter estimation
+1. **01-random-variables/**
+   - `assignment.ipynb`
+   - `solution.ipynb`
+2. **02-maximum-likelihood-estimation/**
+   - `assignment.ipynb`
+   - `solution.ipynb`
+3. **03-inference-estimators/**
+   - `assignment.ipynb`
+   - `solution.ipynb`
+4. **04-gaussian-confidence-intervals/**
+   - `assignment.ipynb`
+   - `dataset-recommendations.md`
+5. **05-non-parametric-estimation/**
+   - `assignment.ipynb`
+6. **06-model-fitting/**
+   - `assignment.ipynb`
 
-> **Note**: Additional lab sessions will be released as we progress through the course.
+> Labs 07+ (hypothesis testing, project integration) will be posted after they are covered in class.
 
 ### 🧾 Final Project (`projects/birds-biodiversity/`)
 
