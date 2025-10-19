@@ -1,0 +1,147 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{hyperref}
+
+\begin{document}
+
+\begin{center}
+{\LARGE First Exam — Lessons 0 \& 1 (Version B)}\\[0.75em]
+\end{center}
+
+\noindent\textbf{Time allowed:} 60 minutes\\
+\textbf{Resources:} Printed course notes and personal handwritten notes only. Electronic devices, calculators, and statistical tables are not permitted.\\
+\textbf{Instructions:} Answer all four questions. Show algebraic steps and clearly label each part. Unless stated otherwise, provide exact values (fractions, radicals, exponentials). Partial credit is available when reasoning is clearly explained.
+
+\vspace{0.75em}
+\noindent\begin{tabular}{@{}p{2.2cm}p{8.2cm}r@{}}
+\toprule
+\textbf{Question} & \textbf{Topic} & \textbf{Points}\\
+\midrule
+1 & Probability structures and independence & 25\\
+2 & Bayes' rule and conditional reasoning & 25\\
+3 & Uniform model derivations & 25\\
+4 & Interpreting summaries and convergence & 25\\
+\midrule
+\textbf{Total} & & \textbf{100}\\
+\bottomrule
+\end{tabular}
+
+\vspace{1em}
+\hrule
+\vspace{1em}
+
+\section*{Question 1 — Probability Foundations (25 points)}
+
+A die is rolled twice. Throughout parts (a)–(c), assume the die is fair.
+
+\begin{enumerate}
+  \item (6 pts) Specify a probability space $\,(\Omega, \mathcal{F}, P)\,$ for this experiment. Clearly describe the sample space, a natural $\sigma$-algebra, and the probability measure.
+  \item (6 pts) Let $A$ be the event ``the sum of the two rolls is at least 10'' and $B$ the event ``the first roll shows a 5 or 6.'' Compute $P(A)$, $P(B)$, and $P(A \cap B)$.
+  \item (5 pts) Are $A$ and $B$ independent? Justify your answer using the formal definition.
+  \item (8 pts) Now suppose the die is biased such that the probability of rolling a 6 is $q$ (where $0 < q < \tfrac{1}{6}$), while outcomes 1 through 5 are equally likely with total probability $1-q$. With the same definition of event $B$, derive an expression for $P_q(B)$ in terms of $q$. For which value of $q$ does $P_q(B) = \tfrac{1}{3}$? Provide algebraic reasoning.
+\end{enumerate}
+
+\vspace{0.75em}
+\hrule
+\vspace{0.75em}
+
+\section*{Question 2 — Bayes' Rule in Fraud Detection (25 points)}
+
+A bank uses an automated system to flag potentially fraudulent credit card transactions. Historical data indicate that $\tfrac{1}{50}$ of transactions are actually fraudulent. The system has sensitivity (true positive rate) $\tfrac{4}{5}$ and specificity (true negative rate) $\tfrac{39}{40}$.
+
+\medskip
+\noindent\textit{Recall:} sensitivity $= P(\text{Flag} \mid \text{Fraud})$ and specificity $= P(\text{No Flag} \mid \text{No Fraud})$. The false positive rate is $1-\text{specificity} = P(\text{Flag} \mid \text{No Fraud})$.
+
+\begin{enumerate}
+  \item (7 pts) Compute the probability that a randomly selected transaction is flagged as suspicious.
+  \item (8 pts) Given that a transaction is flagged, determine the probability that it is actually fraudulent. Express your answer as a reduced fraction.
+  \item (6 pts) Given that a transaction is not flagged, determine the probability that it is actually fraudulent. Express your answer as a reduced fraction.
+  \item (4 pts) Let $\pi = P(\text{Fraud})$, $s = P(\text{Flag} \mid \text{Fraud})$ (sensitivity), and $c = P(\text{No Flag} \mid \text{No Fraud})$ (specificity). Derive a formula for $P(\text{Fraud} \mid \text{Flag})$ in terms of $\pi$, $s$, and $c$, and briefly state how increasing $c$ affects this probability.
+\end{enumerate}
+
+\vspace{0.75em}
+\hrule
+\vspace{0.75em}
+
+\section*{Question 3 — Uniform Waiting-Time Model (25 points)}
+
+Let $T$ be the time (in minutes) until the next customer arrives at a service counter, and suppose $T$ follows a uniform distribution on $[0,8]$.
+
+\medskip
+\noindent\textbf{Recall:} The probability density function of a $\mathrm{Uniform}(a,b)$ random variable is
+\[
+f_T(t) =
+\begin{cases}
+\dfrac{1}{b-a}, & a \le t \le b,\\
+0, & \text{otherwise},
+\end{cases}
+\]
+and the cumulative distribution function is $F_T(t) = 0$ for $t<a$, $F_T(t) = \dfrac{t-a}{b-a}$ for $a \le t \le b$, and $F_T(t) = 1$ for $t>b$.
+
+\begin{enumerate}
+  \item (5 pts) Specialise the CDF $F_T(t)$ for $T \sim \mathrm{Uniform}(0,8)$.
+  \item (5 pts) Using your result from part (1), compute $P(2 \le T \le 6)$.
+  \item (9 pts) Compute $E[T]$ and $\operatorname{Var}(T)$ directly from integrals. Show the essential integration steps leading to exact values.
+  \item (6 pts) Define $Y = 2T + 5$. Compute $E[Y]$ and $\operatorname{Var}(Y)$ using properties of expectation and variance. Provide exact values.
+\end{enumerate}
+
+\vspace{0.75em}
+\hrule
+\vspace{0.75em}
+
+\section*{Question 4 — Interpreting Summaries and Convergence (25 points)}
+
+Table~\ref{tab:b-sim} summarises the results of a simulation: for each sample size $n$, 800 independent samples of size $n$ were drawn from an exponential distribution with mean $3$, and the sample mean was recorded for each run.
+
+\begin{table}[h]
+\centering
+\caption{Behaviour of Sample Means}\label{tab:b-sim}
+\begin{tabular}{@{}rcc@{}}
+\toprule
+\textbf{Sample size $n$} & \textbf{Average of the 800 sample means} & \textbf{SD of the 800 sample means}\\
+\midrule
+10  & 3.06 & 0.94 \\
+40  & 3.01 & 0.47 \\
+160 & 3.00 & 0.24 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Another analysis compared a standardised dataset (mean 0, variance 1) to the standard normal distribution. Selected points from the QQ-plot are listed below.
+
+\begin{table}[h]
+\centering
+\caption{Selected QQ-Plot Quantiles}\label{tab:b-qq}
+\begin{tabular}{@{}rc@{}}
+\toprule
+\textbf{Normal quantile} & \textbf{Sample quantile}\\
+\midrule
+-2.0 & -1.4 \\
+-1.0 & -0.8 \\
+ 0.0 &  0.1 \\
+ 1.0 &  0.9 \\
+ 2.0 &  1.6 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\medskip
+Answer the following:
+\begin{enumerate}
+  \item (9 pts) Use Table~\ref{tab:b-sim} to explain how the Law of Large Numbers manifests in this simulation. Refer explicitly to the numerical values.
+  \item (8 pts) Still relying on Table~\ref{tab:b-sim}, discuss how the variability of the sample mean changes with $n$ and connect your explanation to the Central Limit Theorem.
+  \item (8 pts) Interpret Table~\ref{tab:b-qq}. Describe the shape of the corresponding QQ-plot, assess the plausibility of a normal model, and recommend a modelling or diagnostic action before relying on normal-based methods.
+\end{enumerate}
+
+\vspace{0.75em}
+\hrule
+\vspace{0.25em}
+
+\noindent\textit{End of exam.} Ensure answers are clearly labelled and presented legibly.
+
+\end{document}
