@@ -4,8 +4,19 @@ This note helps you quickly understand the contents of `data/raw/Observations 20
 
 ## Source & Scope
 - **Program**: Martinique breeding bird monitoring initiative (Applied Statistics final project).
-- **Years covered**: 2012–2025 (inclusive) with one row per observation record.
+- **Years covered**: 2012–2025 (inclusive) with one row per observation record in the observation sheet.
 - **Geography**: Island-wide transects; each observation references a monitoring point.
+
+## Workbook structure
+The Excel workbook ships with three tabs you will use together:
+
+| Sheet name | Purpose |
+|------------|---------|
+| `ESPECES` | Bird taxonomy helper (scientific / French names, migration status, endemic vs. introduced). |
+| `GPS-MILIEU` | Site catalogue with one row per observation point (transect ID, point ID, habitat type, GPS labels). |
+| `NOM FRANÇAIS` | Observation log – the main fact table with one row per point visit including counts and detection metadata. |
+
+Always keep the mapping sheets (`ESPECES`, `GPS-MILIEU`) alongside the observations so you can enrich the fact table with species and habitat context during your analysis.
 
 ## How observations are gathered
 1. **Transects as sites** – each transect corresponds to a monitoring site. Every site contains **10 fixed observation points** laid out along the transect.
