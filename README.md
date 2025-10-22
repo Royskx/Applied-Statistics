@@ -12,10 +12,10 @@ An introduction to applied statistics with materials released progressively thro
 - **Statistical modeling** and exploratory data analysis
 - **Estimation methods** (Maximum Likelihood, Method of Moments)
 - **Estimator properties** (bias, variance, confidence intervals, bootstrap)
+- **Final project brief** (Birds Biodiversity case study)
 
 **Coming soon:**
 - Hypothesis testing and applications
-- Final project guidelines
 
 ### Prerequisites
 - Basic probability theory (random variables, distributions)
@@ -40,14 +40,34 @@ Each lesson folder contains:
 
 > **Note**: Additional lessons (04-06) will be released throughout the semester.
 
-### 🧪 Lab Sessions (`labs/Subjects/`)
+### 🧪 Lab Sessions (`labs/`)
 
-Interactive Jupyter notebooks for hands-on practice:
+Interactive Jupyter notebooks for hands-on practice. Completed labs include both the assignment and a worked solution; in-progress topics ship the assignment only.
 
-1. **Random Variables** - Working with distributions and simulation
-2. **Maximum Likelihood Estimation** - Parameter estimation
+1. **01-random-variables/**
+   - `assignment.ipynb`
+   - `solution.ipynb`
+2. **02-maximum-likelihood-estimation/**
+   - `assignment.ipynb`
+   - `solution.ipynb`
+3. **03-inference-estimators/**
+   - `assignment.ipynb`
+   - `solution.ipynb`
+4. **04-gaussian-confidence-intervals/**
+   - `assignment.ipynb`
+   - `dataset-recommendations.md`
+5. **05-non-parametric-estimation/**
+   - `assignment.ipynb`
+6. **06-model-fitting/**
+   - `assignment.ipynb`
 
-> **Note**: Additional lab sessions will be released as we progress through the course.
+> Labs 07+ (hypothesis testing, project integration) will be posted after they are covered in class.
+
+### 🧾 Final Project (`projects/birds-biodiversity/`)
+
+- `data/raw/Observations 2012-2025.xlsx` – primary dataset for the capstone.
+- `final_project_assignment.pdf` – detailed brief outlining objectives, deliverables, and submission rules.
+- Use this folder as the starting point for your analysis; create your own notebooks/scripts to keep the workflow reproducible.
 
 ### 📊 Data (`shared/data/`)
 
@@ -93,7 +113,7 @@ This installs:
 jupyter lab
 ```
 
-Navigate to `labs/Subjects/` and open a notebook to get started!
+Navigate to `labs/` and open the notebook for the current lab.
 
 ### 4. Alternative: Google Colab
 
@@ -108,12 +128,12 @@ You can also run notebooks in Google Colab:
 
 1. **Before class**: Read the lesson material in `lessons/XX-topic/`
 2. **During class**: Follow along with slides and examples
-3. **After class**: Complete the lab assignment in `labs/Subjects/`
+3. **After class**: Complete the lab assignment in the corresponding `labs/XX-topic/` folder
 4. **Practice**: Work through exercises in `lessons/XX-topic/exercises/`
 
 ### Completing Lab Assignments
 
-1. Open the notebook in `labs/Subjects/`
+1. Open the notebook in the numbered `labs/XX-topic/` directory for that session
 2. Read instructions carefully
 3. Write your code in the designated cells
 4. Test your code thoroughly
